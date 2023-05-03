@@ -7,6 +7,5 @@ To automate the process, crontab schedules it to run every morning at 5.55am (ri
 
 
 These links offered the grounds for working on this. Most things have been adapted for the intended use:
-pushbullet: https://iotdesignpro.com/projects/home-security-system-using-raspberry-pi-and-pir-sensor-with-push-notification-alert
-
-API: https://www.geeksforgeeks.org/python-find-current-weather-of-any-city-using-openweathermap-api/
+- pushbullet: https://iotdesignpro.com/projects/home-security-system-using-raspberry-pi-and-pir-sensor-with-push-notification-alert
+- API: https://www.geeksforgeeks.org/python-find-current-weather-of-any-city-using-openweathermap-api/
