@@ -5,7 +5,7 @@ import time
 
 
 #token
-pb = Pushbullet("o.1WBLdaCPq6RO6Ax0LZV7yHAd3gguE5m7")
+pb = Pushbullet("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 #set device
 dev = pb.get_device("Samsung SM-A528B")
 
