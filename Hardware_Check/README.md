@@ -3,10 +3,10 @@ With an upcoming RAID1 as well as regular crontab tasks in mind, I've implemente
 Here, once again, the tool Pushbullet is being used, so that i can the notifications on my phone.
 
 On a second go, this programm was changed as follows:
-- The Script runs on startup, this is done with crontab: 
-- ```@reboot /bin/usr/python3 /path/to/script.py```
-- Every second a python script reads the values and writes them into a .txt
-- The main script, instead of getting the values from the device, reads the .txt
+- The Script runs on startup, this is done with crontab: ```@reboot /bin/usr/python3 /path/to/script.py```
+- Since the push notifications require internet, i implemented a check whether there is an active internet connection or not. Once that is fulfilled, the script itself starts running
+- Every second a python script reads the values and writes them into a .csv
+- The main script, instead of getting the values from the device, reads the .csv
 - This way, there's a more conistent data flow, meaning that if there was an undervolt or throttling within the last minute, it will be detected and reported
 
 ## Temperature
