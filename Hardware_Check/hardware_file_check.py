@@ -3,14 +3,37 @@ from pushbullet import Pushbullet
 from vcgencmd import Vcgencmd
 import time
 import csv
+import urllib.request
+
+
+#checks if there is an internet connection, and only start the actual script once there is
+#prevents the attempt to send push notifs that go nowhere due to lack of internet connection
+def check_internet():
+    while True:
+        try:
+            urllib.request.urlopen('http://www.google.com', timeout=1)
+            return True
+        except urllib.request.URLError:
+            pass
+        time.sleep(1)
+
+# Wait for an active internet connection before running the script
+while not check_internet():
+    time.sleep(1)
+
+
+
 
 #token
-pb = Pushbullet("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+pb = Pushbullet("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 #set device
 dev = pb.get_device("Samsung SM-A528B")
 
 #hardware checks
 vcgm = Vcgencmd()
+
+#startup-message
+push = dev.push_note("Reboot:", "The Pi has just been rebooted")
 
 #in this loop, the file is read and overwritten
 #this way, the file will automatically be "renewed" every minute
@@ -47,5 +70,5 @@ while True:
                 throttle_value = row[1]
                 if temp_value > 77.0:
                         push = dev.push_note("ELEVATED TEMP", f"The Raspi is hot af, currently {temp}")
-                elif throttle_value == "0x50005" or throttle value == "0x50003" or throttle_value == "0x50007":
+                elif throttle_value == "0x50005" or throttle_value == "0x50003" or throttle_value == "0x50007":
                         push = dev.push_note("THROTTLING", "There was recent undervolting or thermal throttling")
