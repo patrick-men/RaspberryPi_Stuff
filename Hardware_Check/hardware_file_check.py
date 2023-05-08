@@ -1,4 +1,4 @@
-from datetime import date
+  GNU nano 5.4                                                                                                                                                              hardware_file_check.py                                                                                                                                                                       from datetime import date
 from pushbullet import Pushbullet
 from vcgencmd import Vcgencmd
 import time
@@ -25,7 +25,7 @@ while not check_internet():
 
 
 #token
-pb = Pushbullet("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+pb = Pushbullet("o.1WBLdaCPq6RO6Ax0LZV7yHAd3gguE5m7")
 #set device
 dev = pb.get_device("Samsung SM-A528B")
 
@@ -47,7 +47,7 @@ while True:
         writer = csv.writer(f)
         #repeat 39 times, i.e. for a minute
         #with leeway in case something slows down/unknown runtime of reading and pushing notif
-        for i in range(10):
+        for i in range(38):
                 #throttle
                 throttle_o = vcgm.get_throttled()
                 throttle = throttle_o.get("raw_data")
@@ -72,3 +72,5 @@ while True:
                         push = dev.push_note("ELEVATED TEMP", f"The Raspi is hot af, currently {temp}")
                 elif throttle_value == "0x50005" or throttle_value == "0x50003" or throttle_value == "0x50007":
                         push = dev.push_note("THROTTLING", "There was recent undervolting or thermal throttling")
+        #deletes content from the csv file, allowing for new data to be written
+        f.write('')
