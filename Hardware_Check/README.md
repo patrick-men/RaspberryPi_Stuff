@@ -4,8 +4,7 @@ Here, once again, the tool Pushbullet is being used, so that i can the notificat
 
 On a second go, this programm was changed as follows:
 - The Script runs on startup, this is done with crontab: 
-- ```
-@reboot /bin/usr/python3 /path/to/script.py
+- ```@reboot /bin/usr/python3 /path/to/script.py```
 - Every second a python script reads the values and writes them into a .txt
 - The main script, instead of getting the values from the device, reads the .txt
 - This way, there's a more conistent data flow, meaning that if there was an undervolt or throttling within the last minute, it will be detected and reported
