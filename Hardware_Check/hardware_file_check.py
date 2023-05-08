@@ -1,4 +1,4 @@
-  GNU nano 5.4                                                                                                                                                              hardware_file_check.py                                                                                                                                                                       from datetime import date
+                                                                                                                           hardware_file_check.py                                                                                                                                                                       from datetime import date
 from pushbullet import Pushbullet
 from vcgencmd import Vcgencmd
 import time
