@@ -14,11 +14,4 @@ services:
     environment: #ensure that the default user is used - cat /etc/passwd show that this is the initially created user
       - PUID=1000
       - PGID=1000
-    networks:
-      - proxy
     restart: unless-stopped
-
-networks:
-  proxy:
-    driver: bridge
-    external: true
