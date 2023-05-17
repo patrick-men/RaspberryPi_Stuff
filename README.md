@@ -8,7 +8,7 @@ Remote connection through WireGuard, File Cloud with NextCloudPi.
 
 
 Everything involving pushbullet has these requirements:
-```
+```bash
 sudo apt install python3-pip
 sudo pip3 install setuptools
 sudo pip3 install vcgencmd
