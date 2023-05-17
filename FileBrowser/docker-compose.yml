@@ -1,1 +1,24 @@
+version: '3.1'
 
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:s6
+    container_name: filebrowser
+    restart: unless-stopped
+    volumes: #data directory, database directory, json directory
+      - /opt/filebrowser:/srv
+      - /opt/filebrowser/database/filebrowser.db:/database.db 
+      - /opt/filebrowser/config/filebrowser.json:/filebrowser.json
+    ports:
+      - 8080:80
+    environment: #ensure that the default user is used - cat /etc/passwd show that this is the initially created user
+      - PUID=1000
+      - PGID=1000
+    networks:
+      - proxy
+    restart: unless-stopped
+
+networks:
+  proxy:
+    driver: bridge
+    external: true
