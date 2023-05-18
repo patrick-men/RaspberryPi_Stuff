@@ -1,4 +1,4 @@
-```
+```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install mdadm
 
@@ -6,7 +6,7 @@ sudo apt install mdadm
 lsblk
 ```
 Output:
-```
+```bash
 NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
 sda           8:0    0 931.5G  0 disk
 └─sda1        8:1    0 931.5G  0 part
@@ -19,17 +19,17 @@ mmcblk0     179:0    0  59.6G  0 disk
 
 The chosen HDDs are sda and sdb
 For RAID to work, the partitions need to be wiped:
-```
+```bash
 sudo parted /dev/sda "rm 1"
 sudo parted /dev/sdb "rm 1"
 ```
 
 To check if everything worked out as intended: 
-```
+```bash
 lsblk
 ```
 Output:
-```
+```bash
 NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
 sda           8:0    0 931.5G  0 disk
 sdb           8:16   0 931.5G  0 disk
@@ -39,13 +39,13 @@ mmcblk0     179:0    0  59.6G  0 disk
 ```
 
 Set partition tables for RAID1 (HDDs have < 2TB, so the msdos partition table is used):
-```
+```bash
 sudo parted /dev/sda "mklabel msdos"
 sudo parted /dev/sdb "mklabel msdos"
 ```
 
 Now the partitions need to be set & activated
-```
+```bash
 sudo parted /dev/sda "mkpart primary ext4 1M -1"
 sudo parted /dev/sdb "mkpart primary ext4 1M -1"
 
@@ -54,12 +54,12 @@ sudo parted /dev/sdb "set 1 raid on"
 ```
 
 Check if everything is setup properly
-```
+```bash
 sudo parted -s /dev/sda print
 sudo parted -s /dev/sdb print
 ```
 Output:
-```
+```bash
 Model: Seagate Basic (scsi)
 Disk /dev/sda: 1000GB
 Sector size (logical/physical): 512B/4096B
@@ -82,11 +82,11 @@ Looks correct.
 
 Now RAID needs to be initiated:
 
-```
+```bash
 sudo mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sda1 /dev/sdb1
 ```
 Output: 
-```
+```bash
 mdadm: /dev/sda1 appears to be part of a raid array:
        level=raid1 devices=2 ctime=Sat May  6 19:36:41 2023
 mdadm: partition table exists on /dev/sda1 but will be lost or
@@ -104,15 +104,22 @@ mdadm: Defaulting to version 1.2 metadata
 mdadm: array /dev/md0 started.
 ```
 Check:
-```
+```bash
 cat /proc/mdstat
 ```
 Output: 
-```
+```bash
 Personalities : [raid1]
 md0 : active raid1 sdb1[1](F) sda1[0]
       976628736 blocks super 1.2 [2/1] [U_]
       bitmap: 8/8 pages [32KB], 65536KB chunk
 
 unused devices: <none>
+```
+
+Once done, the RAID device needs to be mounted - I chose /media/md0
+
+```bash
+sudo mkdir /media/md0
+sudo mount /dev/md0 /media/md0
 ```
