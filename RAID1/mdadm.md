@@ -117,9 +117,9 @@ md0 : active raid1 sdb1[1](F) sda1[0]
 unused devices: <none>
 ```
 
-Once done, the RAID device needs to be mounted - I chose /media/md0
+Once done, the RAID device needs to be mounted - I chose /media/md0. To make it persistant, /etc/fstab has to be adapted as follows:
 
 ```bash
-sudo mkdir /media/md0
-sudo mount /dev/md0 /media/md0
+/dev/md0 /media/md0 ext4 defaults 0 0
 ```
+Afterwards, either a reboot or ```mount -a``` would have the changes take effect, thus making the mount persistant.
