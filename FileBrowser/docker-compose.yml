@@ -1,14 +1,14 @@
-version: '3.1'
-
+version: '3'
 services:
   filebrowser:
     image: filebrowser/filebrowser:s6
     container_name: filebrowser
-    restart: unless-stopped
-    volumes: #data directory, database directory, json directory
-      - /opt/filebrowser:/srv
-      - /opt/filebrowser/database/filebrowser.db:/database.db 
-      - /opt/filebrowser/config/filebrowser.json:/filebrowser.json
+    user: 1000:1000
     ports:
-      - 8080:80
+      - 8888:80
+    volumes:
+      - /media/md0/data/:/srv
+      - /media/md0/filebrowser/filebrowser.db:/database.db
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
