@@ -1,10 +1,14 @@
-                                                                                                                           hardware_file_check.py                                                                                                                                                                       from datetime import date
+# hardware_file_check.py
+
+from datetime import date
 from pushbullet import Pushbullet
 from vcgencmd import Vcgencmd
 import time
 import csv
 import urllib.request
+import os
 
+file_path = "/home/pi/pushnotif/data_read.csv"
 
 #checks if there is an internet connection, and only start the actual script once there is
 #prevents the attempt to send push notifs that go nowhere due to lack of internet connection
@@ -20,8 +24,6 @@ def check_internet():
 # Wait for an active internet connection before running the script
 while not check_internet():
     time.sleep(1)
-
-
 
 
 #token
@@ -40,9 +42,9 @@ push = dev.push_note("Reboot:", "The Pi has just been rebooted")
 #upon reading the file, it will be written for a minute, before it's overwritten again
 while True:
         #file to write
-        f = open("data_read.csv", "w", newline="")
+        f = open(file_path, "w", newline="")
         #file to read
-        r = open("data_read.csv", "r")
+        r = open(file_path, "r")
         #variable for csv-writing
         writer = csv.writer(f)
         #repeat 39 times, i.e. for a minute
@@ -60,6 +62,7 @@ while True:
 
                 #sleep 1.5s, i.e ~40 scans per minute
                 time.sleep(1.5)
+
         time.sleep(1)
 
         #reading the file, and pushing message if anything off is detected
@@ -73,4 +76,5 @@ while True:
                 elif throttle_value == "0x50005" or throttle_value == "0x50003" or throttle_value == "0x50007":
                         push = dev.push_note("THROTTLING", "There was recent undervolting or thermal throttling")
         #deletes content from the csv file, allowing for new data to be written
-        f.write('')
+        f.close()
+        os.remove(file_path)
