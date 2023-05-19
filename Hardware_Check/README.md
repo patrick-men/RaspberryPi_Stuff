@@ -15,3 +15,10 @@ Temp was chosen both because of the workloads, as well as the upcoming summer. I
 ## Untervolting
 Since there will be hardware attached to the Raspi, i want to ensure that there's no undervolting happening. This was the case when the 2 HDDs for the RAID1 were used, which is why it was moved to an external usb hub with its own power cord.
 Since there's still the chance of undervolting, by whichever means that may be, it was added into this script.
+
+## Files that are being used
+I've tried several times to check the contents of the file while the script was running, either by spamming ```cat``` or using ```tail -f```.
+This didn't work and I assumed that the code was broken. This is, however, false (but lead to me optimizing the code):
+
+When a file is being used by a script like here, the data isn't directly written into the file, but rather saved in a cache. As such, the file is under use at it saves ressources this way. This leads to the file not having any content when observed from outside with the aforementioned methods.
+As such, the script works and I got lost in an error that didn't exist :D
