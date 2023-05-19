@@ -1,5 +1,3 @@
-# hardware_file_check.py
-
 from datetime import date
 from pushbullet import Pushbullet
 from vcgencmd import Vcgencmd
@@ -8,7 +6,9 @@ import csv
 import urllib.request
 import os
 
+
 file_path = "/home/pi/pushnotif/data_read.csv"
+
 
 #checks if there is an internet connection, and only start the actual script once there is
 #prevents the attempt to send push notifs that go nowhere due to lack of internet connection
@@ -20,6 +20,7 @@ def check_internet():
         except urllib.request.URLError:
             pass
         time.sleep(1)
+
 
 # Wait for an active internet connection before running the script
 while not check_internet():
@@ -37,16 +38,18 @@ vcgm = Vcgencmd()
 #startup-message
 push = dev.push_note("Reboot:", "The Pi has just been rebooted")
 
+
 #in this loop, the file is read and overwritten
 #this way, the file will automatically be "renewed" every minute
 #upon reading the file, it will be written for a minute, before it's overwritten again
 while True:
-        #file to write
-        f = open(file_path, "w", newline="")
-        #file to read
-        r = open(file_path, "r")
-        #variable for csv-writing
+
+    #open the file in write mode with a context manager that automatically closes when done
+    with open(file_path, 'w', newline="") as f:
+
         writer = csv.writer(f)
+        
+        
         #repeat 39 times, i.e. for a minute
         #with leeway in case something slows down/unknown runtime of reading and pushing notif
         for i in range(38):
@@ -65,16 +68,19 @@ while True:
 
         time.sleep(1)
 
-        #reading the file, and pushing message if anything off is detected
-        content = csv.reader(r)
 
-        for row in content:
-                temp_value = float(row[0])
-                throttle_value = row[1]
-                if temp_value > 77.0:
-                        push = dev.push_note("ELEVATED TEMP", f"The Raspi is hot af, currently {temp}")
-                elif throttle_value == "0x50005" or throttle_value == "0x50003" or throttle_value == "0x50007":
-                        push = dev.push_note("THROTTLING", "There was recent undervolting or thermal throttling")
-        #deletes content from the csv file, allowing for new data to be written
-        f.close()
-        os.remove(file_path)
+    #open the file in read mode with a context manager that automatically closes when done
+    with open(file_path, 'r', newline="") as f:
+
+        reader = csv.reader(f)
+
+        #check for critical values, and push if found
+        for row in reader:
+            temp_value = float(row[0])
+            throttle_value = row[1]
+            if temp_value > 77.0:
+                push = dev.push_note("ELEVATED TEMP", f"The Raspi is hot af, currently {temp}")
+            elif throttle_value == "0x50005" or throttle_value == "0x50003" or throttle_value == "0x50007":
+                push = dev.push_note("THROTTLING", "There was recent undervolting or thermal throttling")
+
+    os.remove(file_path)
