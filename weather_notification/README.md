@@ -14,6 +14,9 @@ These links offered the grounds for working on this. Most things have been adapt
 ~~I tried to read more than just two pieces of data to get a better overview of how the day's weather would look. To do this, I read more data from the .json and turned it into a graph. This is then sent to my phone with pushbullet.~~ Scrapped because push of pictures didn't work as intended
 
 ## Version 3
-In this version the data is read and converted into an ASCII-output, thus turning it into a simplified graph. 
+In this version the data is read and converted into different types of output:
+- Temperature is shown as a sideways bar plot
+- Weather is shown with a corresponding icon and short description
+- Wind speeds are shown with a description as well as the value in m/s
 
 ![Output](output.png)
