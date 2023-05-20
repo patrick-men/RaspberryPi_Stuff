@@ -9,3 +9,6 @@ To automate the process, crontab schedules it to run every morning at 5.55am (ri
 These links offered the grounds for working on this. Most things have been adapted for the intended use:
 - pushbullet: https://iotdesignpro.com/projects/home-security-system-using-raspberry-pi-and-pir-sensor-with-push-notification-alert
 - API: https://www.geeksforgeeks.org/python-find-current-weather-of-any-city-using-openweathermap-api/
+
+## Version 2
+I tried to read more than just two pieces of data to get a better overview of how the day's weather would look. To do this, I read more data from the .json and turned it into a graph. This is then sent to my phone with pushbullet.
