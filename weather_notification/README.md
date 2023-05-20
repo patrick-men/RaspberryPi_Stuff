@@ -15,4 +15,4 @@ These links offered the grounds for working on this. Most things have been adapt
 
 ## Version 3
 In this version the data is read and converted into an ASCII-output, thus turning it into a simplified graph. 
-[Output](output.png)
+![Output](output.png)
