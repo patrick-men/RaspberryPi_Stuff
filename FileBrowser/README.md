@@ -6,6 +6,9 @@ In the beginning, the performance of the Pi whilst running Docker needs to be ob
 
 The tutorial that was followed: https://www.youtube.com/watch?v=0dbi9FDKrzE
 
+# Users
+So far, i haven't managed to make useres persistent. As such, all users need to be recreated when the container restarts.
+
 
 # docker-compose location
 !!!/media/md0/filebrowser!!!
