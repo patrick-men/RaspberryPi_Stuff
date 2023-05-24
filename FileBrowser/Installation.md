@@ -15,3 +15,7 @@ services:
     image: myimage
     restart: unless-stopped
 ```
+# Fixing database
+The inital image, and this the [initial docker-compose file](OLDdocker-compose.yml) that was used (filebrowser/filebrowser:s6) had issues with persistant users: Whenever the container was restarted, the users would all be removed. It was also impossible to properly assign the database to the host device.
+
+After hours of bugfixing I used another image (hurlenko/filebrowser), which immediately worked. This is now in the [docker-compose.yml](docker-compose.yml) file.
