@@ -1,0 +1,13 @@
+version: '3'
+services:
+  filebrowser:
+    image: hurlenko/filebrowser
+    container_name: filebrowser
+    ports:
+      - 8888:8080
+    volumes:
+      - /media/md0/data/:/data
+      - /media/md0/config:/config
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
