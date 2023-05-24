@@ -1,1 +1,8 @@
-
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - /home/pi/nginx:/usr/share/nginx/html
+    restart: unless-stopped
