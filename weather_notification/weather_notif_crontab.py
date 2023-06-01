@@ -1,1 +1,1 @@
-55 5 * * * /usr/bin/python /home/pi/pushnotif/Weather_notif.py
+55 5 * * * /usr/bin/python3 /home/pi/pushnotif/Weather_notif.py
